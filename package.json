@@ -1,0 +1,9 @@
+{
+  "name":"veil-github-phone",
+  "version":"3.0.0",
+  "private":true,
+  "type":"module",
+  "description":"Static GitHub Pages encrypted WebRTC private messenger + Firebase encrypted signaling",
+  "scripts":{"test":"node --test","preview":"npx http-server . -c-1"},
+  "license":"MIT"
+}

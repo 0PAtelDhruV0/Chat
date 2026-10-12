@@ -1,0 +1,44 @@
+name: Test and deploy Veil
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
+      - name: Check source syntax
+        run: |
+          node --check app.js
+          node --check firebase-signal.js
+          node --check protocol.js
+  deploy:
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Prepare static site
+        run: |
+          mkdir _site
+          cp index.html style.css app.js protocol.js firebase-signal.js firebase-config.js ice-config.js service-worker.js manifest.webmanifest icon.svg icon-192.png icon-512.png apple-touch-icon.png _site/
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
