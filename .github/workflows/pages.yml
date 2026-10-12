@@ -1,4 +1,4 @@
-name: Test and deploy Veil
+name: Test and deploy Veyra
 on:
   push:
     branches: [main]
@@ -36,6 +36,7 @@ jobs:
         run: |
           mkdir _site
           cp index.html style.css app.js protocol.js firebase-signal.js firebase-config.js ice-config.js service-worker.js manifest.webmanifest icon.svg icon-192.png icon-512.png apple-touch-icon.png _site/
+          cp -R designs _site/
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v4
         with:
