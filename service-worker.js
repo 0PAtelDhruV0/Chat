@@ -1,6 +1,6 @@
 // Offline shell ONLY: no chats, invitations or signaling data are cached.
 // Network-first ensures new deployment code is favored over stale code.
-const CACHE = 'veil-static-v3';
+const CACHE = 'veyra-static-v4';
 const FILES = ['./', './index.html','./style.css','./app.js','./protocol.js',
  './firebase-config.js','./firebase-signal.js','./ice-config.js','./icon-192.png','./icon-512.png'];
 self.addEventListener('install', event => {
