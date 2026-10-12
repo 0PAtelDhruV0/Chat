@@ -1,4 +1,4 @@
-# Veil Private Messenger — GitHub Chat repository
+# Veyra Private Messenger — GitHub Chat repository
 
 Your repository: https://github.com/0PAtelDhruV0/Chat
 
