@@ -1,6 +1,6 @@
 {
- "name":"Veil Private Messenger",
- "short_name":"Veil",
+ "name":"Veyra Private Messenger",
+ "short_name":"Veyra",
  "description":"Private ephemeral one-to-one encrypted chats and WebRTC calls",
  "display":"standalone",
  "start_url":"./",
