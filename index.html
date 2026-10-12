@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#11151d">
+  <meta name="theme-color" content="#141729">
   <meta name="referrer" content="no-referrer">
   <meta name="description" content="Private one-to-one messages and calls, encrypted between browsers.">
   <title>Veyra — Private conversations</title>
@@ -21,11 +21,11 @@
   </header>
   <main>
     <section id="welcome" class="welcome">
-      <div class="welcome-kicker"><span class="kicker-line"></span> YOUR CONVERSATION. YOUR RULES.</div>
+      <div class="welcome-kicker"><span class="kicker-line"></span> PRIVATE, SIMPLE, YOURS.</div>
       <div id="setupNotice" class="setup-notice hidden" role="alert">App owner: configure Firebase in <code>firebase-config.js</code> before using chat and calls. Read README.md.</div>
       <div class="hero-mark" aria-hidden="true"><div class="hero-mark-inside">◈</div></div>
-      <h1>Some things should<br><em>stay between us.</em></h1>
-      <p class="hero-copy">Private messages. Face-to-face calls. No chat history on the signaling server. Just a secure space for two people.</p>
+      <h1>Stay close.<br><em>Keep it private.</em></h1>
+      <p class="hero-copy">One private room for two people. Encrypted messages and video calls, with identity verification before you start.</p>
       <button id="createBtn" class="primary-button hero-button" type="button"><span class="button-diamond">✧</span> Start a private conversation <span aria-hidden="true">→</span></button>
       <div class="join-area"><span>Have an invitation?</span><button type="button" id="toggleJoinBtn" class="text-link">Join a conversation <span aria-hidden="true">↗</span></button></div>
       <form id="joinForm" class="join-form hidden"><label for="joinLink">Paste your invitation URL</label><div class="join-row"><input id="joinLink" type="url" placeholder="https://example.com/#k=…" autocomplete="off" spellcheck="false" required><button class="secondary-button" type="submit">Join</button></div><p class="hint">The invitation contains a secret. Only share it with someone you trust.</p></form>
@@ -33,20 +33,40 @@
     </section>
 
     <section id="roomView" class="room-view hidden" aria-label="Private conversation">
-      <div class="room-heading"><div><div class="eyebrow">PRIVATE SPACE <span class="eyebrow-divider">/</span> 01</div><h1>Just the two of you<span class="heading-dot">.</span></h1><p>Messages disappear when you close or refresh this page.</p></div><button id="leaveBtn" class="outline-button" type="button">Leave room <span aria-hidden="true">↗</span></button></div>
+      <div class="room-heading">
+        <div class="pulse-headline"><div class="eyebrow">YOUR PRIVATE SPACE <span class="eyebrow-divider">/</span> 01</div><h1>Messages<span class="heading-dot">.</span></h1><p>One temporary conversation. Just the two of you.</p></div>
+        <button id="leaveBtn" class="outline-button" type="button">Leave room <span aria-hidden="true">↗</span></button>
+      </div>
+      <div class="pulse-searchbar">
+        <span aria-hidden="true" class="search-icon">⌕</span>
+        <input id="chatSearch" type="search" placeholder="Search messages on this screen" aria-label="Search current session messages" autocomplete="off">
+        <span id="searchFeedback" aria-live="polite"></span>
+      </div>
+      <div class="pulse-thread-row" aria-label="Current conversation">
+        <div class="pulse-thread-avatar" aria-hidden="true">✦</div>
+        <div class="pulse-thread-copy"><strong>Private conversation</strong><span>Only you and the person you invite</span></div>
+        <button id="quickInviteBtn" class="pulse-invite-chip" type="button">Invite <span aria-hidden="true">↗</span></button>
+      </div>
       <div class="room-grid">
         <section class="chat-panel" aria-label="Chat">
-          <div class="chat-toolbar"><div class="person-pill"><div class="person-avatar">✧</div><div><strong>Private conversation</strong><span id="peerStatus">Waiting for someone to join</span></div></div><div class="toolbar-actions"><span id="securityPill" class="secure-tag">◇ Encrypted</span><button id="callBtn" class="icon-button" type="button" title="Start video call" aria-label="Start video call" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="m16 10 5-3v10l-5-3"/></svg></button></div></div>
+          <div class="chat-toolbar"><div class="person-pill"><div class="person-avatar">✦</div><div><strong>Conversation</strong><span id="peerStatus">Waiting for someone to join</span></div></div><div class="toolbar-actions"><span id="securityPill" class="secure-tag">◇ Encrypted</span><button id="callBtn" class="icon-button" type="button" title="Start video call" aria-label="Start video call" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="m16 10 5-3v10l-5-3"/></svg></button></div></div>
+          <button id="verifyShortcut" class="pulse-verify-shortcut" type="button"><span class="pulse-lock" aria-hidden="true">◇</span><span class="pulse-verify-copy"><strong id="pulseVerifyLabel">Invite a friend to get started</strong><small id="pulseVerifyNote">Compare safety numbers before messaging</small></span><span class="pulse-arrow" aria-hidden="true">→</span></button>
           <div id="messageList" class="messages" aria-live="polite"><div id="emptyChat" class="empty-chat"><div class="empty-chat-symbol">✳</div><h2>A quieter kind of connection.</h2><p>Invite one person to begin. Once connected, compare your safety numbers before sending anything.</p></div></div>
           <form id="messageForm" class="message-form"><input id="messageInput" type="text" placeholder="Verify both identities to message…" autocomplete="off" maxlength="4000" disabled aria-label="Message"><button id="sendBtn" class="send-button" type="submit" aria-label="Send message" disabled>↗</button></form>
           <div class="chat-footer"><span>✧ Encrypted between devices</span><button id="clearBtn" type="button" class="subtle-text-button">Clear this screen</button></div>
         </section>
         <aside class="side-panel" aria-label="Privacy and invitation">
-          <div class="side-card invite-card"><div class="side-card-icon">↗</div><div class="card-overline">STEP 01 · INVITE</div><h2>Bring someone in.</h2><p>Share this private room link with one person. The link is the key to enter.</p><button id="copyBtn" class="side-action" type="button">Copy invitation link <span>↗</span></button><button id="shareBtn" class="side-action share-action" type="button">Share from my phone <span>↗</span></button><div class="link-note">Keep this link private. Anyone who gets it can try to join.</div></div>
-          <div class="side-card verify-card"><div class="card-overline">STEP 02 · VERIFY</div><div class="verify-heading"><h2>Trust, but verify.</h2><span class="verify-emblem">✳</span></div><p>Compare this safety number using a separate trusted channel, like an in-person conversation.</p><div id="safetyNumber" class="safety-number" aria-label="Safety number">WAITING FOR PEER</div><div id="verifyState" class="verify-state"><span class="verify-state-dot"></span> Waiting for a connection</div><button id="verifyBtn" class="side-action verify-button" type="button" disabled>I compared the number <span>✓</span></button><p class="microcopy">Both people must confirm before messages or calls are enabled.</p></div>
+          <div class="side-card invite-card" id="inviteCard"><div class="side-card-icon">↗</div><div class="card-overline">STEP 01 · INVITE</div><h2>Bring someone in.</h2><p>Share this private room link with one person. The link is the key to enter.</p><button id="copyBtn" class="side-action" type="button">Copy invitation link <span>↗</span></button><button id="shareBtn" class="side-action share-action" type="button">Share from my phone <span>↗</span></button><div class="link-note">Keep this link private. Anyone who gets it can try to join.</div></div>
+          <div class="side-card verify-card" id="verifyCard"><div class="card-overline">STEP 02 · VERIFY</div><div class="verify-heading"><h2>Trust, but verify.</h2><span class="verify-emblem">✳</span></div><p>Compare this safety number using a separate trusted channel, like an in-person conversation.</p><div id="safetyNumber" class="safety-number" aria-label="Safety number">WAITING FOR PEER</div><div id="verifyState" class="verify-state"><span class="verify-state-dot"></span> Waiting for a connection</div><button id="verifyBtn" class="side-action verify-button" type="button" disabled>I compared the number <span>✓</span></button><p class="microcopy">Both people must confirm before messages or calls are enabled.</p></div>
           <div class="privacy-note"><span class="privacy-note-asterisk">✳</span><div><strong>No server chat history.</strong><p>Firebase uses anonymous sign-in and temporarily handles encrypted setup messages. No chat transcripts or call recordings are stored by this app.</p></div></div>
         </aside>
       </div>
+      <nav class="pulse-mobile-nav" aria-label="Private room navigation">
+        <button id="pulseNavChats" class="pulse-nav-item active" type="button" aria-label="Go to messages"><span aria-hidden="true">▣</span>Chats</button>
+        <button id="pulseNavInvite" class="pulse-nav-item" type="button" aria-label="Show invite controls"><span aria-hidden="true">✚</span>Invite</button>
+        <button id="pulseNavCall" class="pulse-nav-item" type="button" aria-label="Start a video call"><span aria-hidden="true">◉</span>Video call</button>
+        <button id="pulseNavSafety" class="pulse-nav-item" type="button" aria-label="Show identity verification"><span aria-hidden="true">◇</span>Safety</button>
+      </nav>
     </section>
   </main>
   <footer class="global-footer"><span>© Veyra · Phone-ready private-room prototype</span><span>Privacy is a practice, not a promise of invulnerability.</span></footer>
