@@ -46,8 +46,35 @@ function updateUI() {
     ready() ? '● Both people confirmed the number' :
     localVerified ? '● You confirmed · Waiting for the other person' :
     otherVerified ? '● Other person confirmed · Your turn' : '● Compare the number before confirming';
-  $('verifyState').style.color = ready() ? '#9fd4bb' : '';
+  $('verifyState').style.color = ready() ? '#a9d8bb' : '';
+  updatePulseSafety();
 }
+// Pulse navigation is UI-only: cryptographic state is still controlled by ready().
+function updatePulseSafety() {
+  const badge = $('verifyShortcut');
+  if (!badge) return;
+  const verified = ready();
+  badge.classList.toggle('is-verified', verified);
+  $('pulseVerifyLabel').textContent = verified ? 'Verified private connection' :
+    !peerJoined ? 'Invite a friend to get started' :
+    !identityOK ? 'Establishing secure connection' : 'Verify your identity';
+  $('pulseVerifyNote').textContent = verified ? 'You can message and call securely' :
+    !peerJoined ? 'Share your invitation link' :
+    !identityOK ? 'Waiting for identity exchange' : 'Compare safety numbers on both phones';
+}
+function filterPulseMessages() {
+  const query = $('chatSearch').value.trim().toLocaleLowerCase();
+  const rows = $('messageList').querySelectorAll('.bubble-row');
+  let matches = 0;
+  for (const row of rows) {
+    const bubble = row.querySelector('.bubble');
+    const show = !query || (bubble && bubble.textContent.toLocaleLowerCase().includes(query));
+    row.classList.toggle('hidden', !show);
+    if (show && query) matches++;
+  }
+  $('searchFeedback').textContent = query ? (matches ? `${matches} match${matches===1?'':'es'}` : 'No matches') : '';
+}
+function scrollPulseCard(id) {$(id).scrollIntoView({behavior: 'smooth', block: 'start'});}
 function addSystem(text) {
   $('emptyChat')?.remove();
   const el = document.createElement('div'); el.className = 'system-message'; el.textContent = text;
@@ -60,6 +87,7 @@ function addChat(text, own) {
   const time = document.createElement('div'); time.className = 'bubble-time';
   time.textContent = `${own ? 'You' : 'Peer'} · ${new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}`;
   row.append(bubble, time); $('messageList').append(row); $('messageList').scrollTop = $('messageList').scrollHeight;
+  filterPulseMessages();
 }
 async function deriveSecret(secretBytes) {
   ({roomId, signalKey} = await deriveRoomKeys(secretBytes));
@@ -326,6 +354,21 @@ function endCall(notify = true) {
   stopLocalMedia(); callState = 'idle'; hideCall(); updateUI();
 }
 
+// Quick actions are wired to the original verified controls; no duplicate call logic.
+$('chatSearch').addEventListener('input', filterPulseMessages);
+$('quickInviteBtn').addEventListener('click', () => scrollPulseCard('inviteCard'));
+$('verifyShortcut').addEventListener('click', () => scrollPulseCard(peerJoined ? 'verifyCard' : 'inviteCard'));
+$('pulseNavChats').addEventListener('click', () => scrollPulseCard('messageList'));
+$('pulseNavInvite').addEventListener('click', () => scrollPulseCard('inviteCard'));
+$('pulseNavSafety').addEventListener('click', () => scrollPulseCard('verifyCard'));
+$('pulseNavCall').addEventListener('click', () => {
+  if ($('callBtn').disabled) {
+    toast('Verify both people before starting a video call.');
+    scrollPulseCard('verifyCard');
+    return;
+  }
+  $('callBtn').click();
+});
 $('createBtn').addEventListener('click', async () => {
   const newKey = random(32);
   history.replaceState(null, '', `#k=${encoder(newKey)}`);
@@ -349,7 +392,7 @@ $('copyBtn').addEventListener('click', async () => {
 });
 $('shareBtn').addEventListener('click', async () => {
   if (navigator.share) {
-    try {await navigator.share({title:'Private Veil invitation', text:'Join my private conversation', url:location.href});} catch (error) {if (error.name !== 'AbortError') toast('Could not share. Use Copy invitation link.');}
+    try {await navigator.share({title:'Private Veyra invitation', text:'Join my private conversation', url:location.href});} catch (error) {if (error.name !== 'AbortError') toast('Could not share. Use Copy invitation link.');}
   } else {
     try {await navigator.clipboard.writeText(location.href); toast('Invite link copied. Share it only with your friend.');} catch {toast('Copy the private URL from the browser address bar.');}
   }
@@ -370,6 +413,7 @@ $('messageForm').addEventListener('submit', event => {
 });
 $('clearBtn').addEventListener('click', () => {
   $('messageList').replaceChildren(); addSystem('This screen was cleared. Messages were never stored on the server.');
+  filterPulseMessages();
 });
 $('callBtn').addEventListener('click', () => {
   if (!ready() || callState !== 'idle') return;
