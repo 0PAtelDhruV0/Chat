@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c1117">
+<meta name="description" content="Compare four mobile-first Veyra Messenger concepts. Design previews only; no messaging backend.">
+<title>Veyra · Choose your layout</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0b1016;color:#eaf0f4}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -18%,#222d3a,transparent 45%),#0b1016}button,a{font:inherit}a{color:inherit}button{cursor:pointer}
+.top{max-width:1500px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:23px 28px;border-bottom:1px solid #28313c}
+.logo{font-size:26px;letter-spacing:-1.1px;font-weight:750}.logo span{color:#95b9ab}.live{font-size:12px;color:#9ba9b6;text-decoration:none;border:1px solid #3a4550;padding:11px 14px;border-radius:9px}.live:hover{border-color:#91b9ad}
+.hero{max-width:1500px;margin:0 auto;padding:46px 28px 26px}.eyebrow{color:#8fb2a4;font-size:11px;letter-spacing:2.6px;font-weight:750}.hero h1{font-size:clamp(30px,4vw,54px);line-height:1.07;letter-spacing:-2px;font-weight:620;margin:13px 0}.hero p{color:#a4b0bd;line-height:1.7;max-width:720px;font-size:14px;margin:15px 0}
+.catalog{max-width:1500px;margin:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;padding:16px 28px 50px}
+.design{min-width:0;background:#141a22;border:1px solid #303b47;border-radius:20px;padding:15px;display:flex;flex-direction:column;gap:13px;box-shadow:0 18px 34px #0002}
+.design h2{font-size:20px;letter-spacing:-.7px;margin:4px 0 0}.design p{color:#9faab8;line-height:1.5;font-size:12px;margin:5px 0 0;min-height:36px}.number{color:#93a8ae;font-size:10px;letter-spacing:1.8px;font-weight:750}
+.phone{height:555px;min-width:0;border-radius:19px;border:1px solid #48515d;position:relative;overflow:hidden;background:var(--screen);color:var(--fg);display:flex;flex-direction:column;font-size:12px}
+.phone .status{height:27px;display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:750;padding:8px 16px 0;flex:none}
+.phone .apphead{display:flex;gap:9px;align-items:center;padding:14px 16px 12px;flex:none}
+.phone .apphead strong{font-size:15px;letter-spacing:-.4px}.phone .small{font-size:10px;color:var(--dim)}.phone .pill{font-size:10px;padding:5px 8px;border-radius:15px;border:1px solid var(--border);color:var(--dim)}
+.avatar{width:37px;height:37px;border-radius:13px;display:grid;place-items:center;background:var(--avatar);font-size:17px;font-weight:800;color:var(--fg)}
+.spacer{flex:1}.chats{display:flex;flex-direction:column;gap:12px;padding:14px 15px;flex:1;min-height:0;justify-content:flex-end}
+.bubble{max-width:88%;padding:12px 13px;border-radius:13px 13px 13px 4px;background:var(--in);color:var(--fg);line-height:1.5;font-size:12px}
+.bubble.out{align-self:flex-end;background:var(--out);border-radius:13px 13px 4px 13px;color:var(--out-fg)}
+.caption{font-size:10px;text-align:center;color:var(--dim);padding:5px}
+.composer{margin:10px 12px 16px;border:1px solid var(--border);background:var(--input);height:45px;border-radius:13px;display:flex;align-items:center;justify-content:space-between;padding:0 7px 0 13px;font-size:11px;color:var(--dim);flex:none}
+.send{width:30px;height:30px;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;border-radius:9px;font-weight:700;font-size:15px}
+.sep{height:1px;background:var(--border);margin:0 15px}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--dim);padding:10px 15px}
+.choose{background:#242e37;color:#eff8f4;border:1px solid #52635c;border-radius:10px;padding:14px;font-weight:700;font-size:13px;width:100%;transition:background .15s}
+.choose:hover{background:#33453e}.hint{font-size:11px;color:#889ba6;text-align:center}.notice{max-width:1500px;margin:0 auto 60px;padding:0 28px;color:#8c9ba8;font-size:12px;line-height:1.7}
+.design-a{--screen:#101821;--fg:#ecf4f3;--dim:#93a4ad;--border:#293744;--avatar:#273b42;--in:#1f2c37;--out:#b3dbcc;--out-fg:#122c29;--input:#17232e;--accent:#b3dbcc;--accent-fg:#13322e}
+.design-a .apphead{justify-content:space-between}.design-a .centerbadge{margin:8px auto 2px;border:1px solid #39584e;color:#a7ccbd;background:#1b302d;border-radius:20px;padding:7px 11px;font-size:10px}
+.design-a .chatname{font-size:23px;letter-spacing:-1px;font-weight:630;padding:8px 15px}.design-a .quick{display:flex;align-items:center;justify-content:space-between;padding:0 15px 13px;color:#b3cabf;font-size:11px}
+.design-b{--screen:#151414;--fg:#f2e9df;--dim:#b1a49d;--border:#47382e;--avatar:#44342c;--in:#2b2522;--out:#9d7959;--out-fg:#fff9f2;--input:#25201e;--accent:#ddb58c;--accent-fg:#332219}
+.design-b .apphead{border-bottom:1px solid var(--border);padding:15px}.design-b .lux{font-family:Georgia,serif;font-size:22px;letter-spacing:1px}.design-b .secure{margin:14px 15px 0;padding:13px;border:1px solid #55402d;border-radius:11px;background:#201d1a;display:flex;align-items:center;gap:11px;color:#e8c39e}
+.design-b .secure strong{font-size:11px}.design-b .secure small{font-size:10px;color:#ae9a84}.design-b .chats{gap:15px}.design-b .bubble{font-family:Georgia,serif;font-size:13px}
+.design-c{--screen:#121527;--fg:#f0f1ff;--dim:#a4add0;--border:#343958;--avatar:#43446f;--in:#242a46;--out:#8276df;--out-fg:#fff;--input:#1e233c;--accent:#b2a8ff;--accent-fg:#171629}
+.design-c .apphead{border-bottom:1px solid var(--border)}.design-c .listhead{font-size:24px;font-weight:780;letter-spacing:-1px;padding:9px 15px 3px}.design-c .search{margin:10px 13px 14px;padding:10px 12px;background:#252b45;border-radius:10px;color:#a5b0ca}.design-c .thread{display:flex;align-items:center;padding:12px 14px;gap:10px;background:#242c49;margin:0 8px;border-radius:12px}.design-c .thread strong{font-size:12px}.design-c .thread span{font-size:10px;color:#a5aec7}.design-c .chatpeek{padding:15px 14px 2px;font-size:10px;color:#a6b3cf}.design-c .chats{gap:9px;padding-top:2px}.design-c .tabbar{display:flex;justify-content:space-around;align-items:center;height:45px;border-top:1px solid var(--border);font-size:10px;color:#949dba}
+.design-d{--screen:#0c1618;--fg:#e6f3ed;--dim:#8ea99e;--border:#284239;--avatar:#1a4238;--in:#19332d;--out:#2a644f;--out-fg:#f2fff8;--input:#14261f;--accent:#a3e7bb;--accent-fg:#103126}
+.design-d .apphead{border-bottom:1px solid var(--border)}.design-d .tag{letter-spacing:1.6px;font-size:9px;color:#9bd0ab;font-weight:800}.design-d .safety{margin:10px 12px 4px;padding:11px;border:1px solid #3b6b53;background:#162e27;border-radius:11px}
+.design-d .safety strong{font-size:11px;color:#bcead0}.design-d .safety code{display:block;color:#d0f4df;letter-spacing:1.6px;font-size:11px;margin-top:7px}
+.design-d .keyring{display:flex;justify-content:space-between;padding:9px 13px;font-size:10px;color:#a9cbb6}
+.design-d .chats{gap:12px}.design-d .callbar{display:flex;justify-content:center;gap:10px;padding:0 13px 4px}.design-d .callbar span{border:1px solid #3a5a4b;border-radius:10px;padding:8px 11px;background:#1a332b;color:#b6d8c6}
+@media(max-width:1250px){.catalog{grid-template-columns:repeat(2,minmax(0,1fr))}.phone{height:540px}}@media(max-width:650px){.top{padding:17px 16px}.hero{padding:32px 19px 16px}.hero h1{letter-spacing:-1.4px}.catalog{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(275px,84vw);grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:18px;padding:12px 18px 30px;gap:14px}.design{scroll-snap-align:start}.design p{min-height:36px}.notice{padding:0 20px}.phone{height:550px}.live{font-size:11px;padding:9px}}
+</style></head>
+<body>
+<header class="top"><div class="logo">◆ veyra<span>.</span></div><a class="live" href="../">↗ Open current messenger</a></header>
+<section class="hero"><div class="eyebrow">DESIGN STUDIO / 4 CONCEPTS</div><h1>A calmer way to stay close.</h1><p>Four real mobile-sized UI previews for your private messenger. Swipe sideways on a phone, or compare side by side on a laptop. These are visual concepts with sample messages — no private conversation or camera is connected here.</p></section>
+<main class="catalog" aria-label="Choose a messenger design">
+<article class="design design-a" id="layout-1">
+ <header><span class="number">01 / MINIMAL</span><h2>Quiet</h2><p>Clean conversation. Muted teal. Almost nothing to distract you.</p></header>
+ <div class="phone" aria-label="Quiet chat screen preview">
+   <div class="status"><span>9:41</span><span>●●●  ▰</span></div>
+   <div class="apphead"><span style="font-size:21px;font-weight:760">◆ veyra<span style="color:#9ad1b8">.</span></span><span class="pill">⋯</span></div>
+   <div class="chatname">A private space</div><div class="quick"><span>Only you and Alex</span><span>◉ Video</span></div>
+   <div class="sep"></div><div class="centerbadge">✓ Identity verified</div>
+   <div class="chats"><div class="caption">TODAY • ENCRYPTED</div><div class="bubble">Hey! How was your day?</div><div class="bubble out">Pretty great. Just finished work ☕</div><div class="bubble">Free for a quick video call later?</div><div class="bubble out">Definitely. In about ten minutes.</div></div>
+   <div class="composer"><span>Write a message</span><div class="send">↗</div></div>
+ </div>
+ <button class="choose" data-choice="01 — Quiet">Choose Quiet ↗</button><div class="hint">Open, airy, everyday use</div>
+</article>
+<article class="design design-b" id="layout-2">
+ <header><span class="number">02 / PREMIUM</span><h2>Noir</h2><p>Deep charcoal. Soft bronze. Feels like a private members' space.</p></header>
+ <div class="phone" aria-label="Noir chat screen preview">
+   <div class="status"><span>9:41</span><span>●●●  ▰</span></div>
+   <div class="apphead"><div class="lux">VEYRA</div><span class="spacer"></span><span style="font-size:17px;color:#c6a082">⌕ &nbsp; ◉</span></div>
+   <div style="padding:15px 15px 0;font-size:21px;font-family:Georgia,serif">Your conversation.</div>
+   <div style="padding:8px 15px;color:#bbad9f;font-size:11px">Just you and Alex. Nothing else.</div>
+   <div class="secure"><span style="font-size:25px">◇</span><div><strong>PRIVATE SESSION</strong><br><small>End-to-end encrypted · Verified</small></div></div>
+   <div class="chats"><div class="caption">OCTOBER 11</div><div class="bubble">That sounds like a perfect plan.</div><div class="bubble out">I’ll send the details tonight.</div><div class="bubble">Should we call tomorrow?</div><div class="bubble out">Absolutely. Looking forward to it.</div></div>
+   <div class="composer"><span>Write privately…</span><div class="send">↑</div></div>
+ </div>
+ <button class="choose" data-choice="02 — Noir">Choose Noir ↗</button><div class="hint">Warm, refined, premium</div>
+</article>
+<article class="design design-c" id="layout-3">
+ <header><span class="number">03 / FAMILIAR</span><h2>Pulse</h2><p>A quick, modern chat look with easy navigation and compact controls.</p></header>
+ <div class="phone" aria-label="Pulse chat screen preview">
+   <div class="status"><span>9:41</span><span>●●●  ▰</span></div>
+   <div class="apphead"><span style="font-size:16px;font-weight:800">◆ veyra</span><span class="spacer"></span><span class="pill">✚ New chat</span></div>
+   <div class="listhead">Messages</div><div class="search">⌕ &nbsp; Search conversations</div>
+   <div class="thread"><div class="avatar">A</div><div><strong>Alex</strong><br><span>Verified private chat</span></div><span class="spacer"></span><span style="color:#a7dcad">●</span></div>
+   <div class="chatpeek">ACTIVE CHAT • ALEX</div>
+   <div class="chats"><div class="bubble">Are you ready for tomorrow?</div><div class="bubble out">Yep! Everything’s all set.</div><div class="bubble">Awesome, let's talk tonight.</div><div class="bubble out">Sounds good 👋</div></div>
+   <div class="composer"><span>Message Alex…</span><div class="send">↑</div></div>
+   <div class="tabbar"><span style="color:#c5bdff">▣ Chats</span><span>◉ Calls</span><span>⚙ Settings</span></div>
+ </div>
+ <button class="choose" data-choice="03 — Pulse">Choose Pulse ↗</button><div class="hint">Most familiar, easiest to learn</div>
+</article>
+<article class="design design-d" id="layout-4">
+ <header><span class="number">04 / PRIVACY FIRST</span><h2>Fortress</h2><p>Identity verification and call security stay visible without clutter.</p></header>
+ <div class="phone" aria-label="Fortress chat screen preview">
+   <div class="status"><span>9:41</span><span>●●●  ▰</span></div>
+   <div class="apphead"><div class="avatar">◆</div><div><strong>VEYRA / SECURE</strong><div class="tag">ACTIVE PRIVATE ROOM</div></div><span class="spacer"></span><span style="color:#b3e6c9;font-size:20px">◉</span></div>
+   <div class="keyring"><span>● Device connected</span><span>2 of 2 participants</span></div>
+   <div class="safety"><strong>✓ VERIFIED CONNECTION</strong><code>89AD · 74F0 · 27E5</code><div style="font-size:10px;color:#8ebda4;margin-top:5px">Safety number matched</div></div>
+   <div class="chats"><div class="caption">SECURE CONVERSATION</div><div class="bubble">We’re connected securely.</div><div class="bubble out">Safety numbers match ✓</div><div class="bubble">Great. Shall we start a call?</div><div class="bubble out">Yes, let's do it.</div></div>
+   <div class="callbar"><span>◉ &nbsp; Video call</span><span>⌁ &nbsp; Share invite</span></div>
+   <div class="composer"><span>Message securely…</span><div class="send">↑</div></div>
+ </div>
+ <button class="choose" data-choice="04 — Fortress">Choose Fortress ↗</button><div class="hint">Safety clarity at a glance</div>
+</article>
+</main>
+<div class="notice">DESIGN PREVIEW ONLY · No sample messages are sent or stored. These previews do not alter your current messenger or security implementation. Reply to ChatGPT with a layout number (1, 2, 3, or 4) to apply that design to the real app. Working name: “Veyra” (not trademark-checked).</div>
+<script>
+document.querySelectorAll('.choose').forEach(b=>b.addEventListener('click',async()=>{
+ const value='I choose Veyra layout '+b.dataset.choice+' for my chat app.';
+ try {await navigator.clipboard.writeText(value); b.textContent='Copied! Paste your choice in ChatGPT ✓';}
+ catch {b.textContent='Choose '+b.dataset.choice+' — tell ChatGPT';}
+}));
+</script>
+</body></html>
