@@ -1,4 +1,4 @@
-# Veil — mobile encrypted chat + video calls (GitHub Pages edition)
+# Veyra — mobile encrypted chat + video calls (GitHub Pages edition)
 
 This repository is a **static GitHub Pages website** you can open in **iPhone/iPad Safari, Android Chrome, or desktop browsers**. Use the same HTTPS link on both phones. After deployment, create a room and send your friend the private invitation link. The invited friend joins as the second participant.
 
