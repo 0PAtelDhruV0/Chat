@@ -30,12 +30,16 @@ GitHub Pages is static hosting: it **cannot run a WebSocket or signaling server*
 
 1. Create a **public GitHub repository** (for example `Chat`) and upload **the individual files/folders inside this ZIP**, directly in the repository root. In GitHub, `Add file → Upload files` can upload these together. Do not upload only a ZIP as the website.
 2. Verify `index.html`, `app.js`, `firebase-signal.js`, `protocol.js`, `firebase-config.js`, `database.rules.json`, and `style.css` are in the repository root. (The `tests/` folder is optional to deploy.)
-3. In the repo choose **Settings → Pages** → **Source: GitHub Actions** → **Save**. The included `.github/workflows/pages.yml` automatically runs tests and publishes the website when files change. **Do not choose Deploy from a branch** for this package.
+3. In **Settings → Pages**, use **Deploy from a branch**, branch **main**, folder **/(root)**. GitHub's built-in Pages publisher serves the site; `.github/workflows/pages.yml` independently runs code tests on every push.
 4. Your address will look like `https://USERNAME.github.io/Chat/`. Open this HTTPS link on your phone. The app will warn on its landing screen if Firebase isn't configured. Configuration changes require committing a new file to GitHub and allowing Pages to redeploy.
 
 > **GitHub Pages is public:** Anyone can read website source code and public Firebase config. The database rules and random secret protect temporary signaling data. Do not host secrets in the repository. GitHub can see web access metadata.
 
-The included workflow automatically publishes after changes to `main`; check the **Actions** tab for deployment success. **GitHub Pages must be enabled once** in Settings → Pages (GitHub Actions source).
+GitHub's built-in Pages publisher deploys changes to `main`; check the **Actions** tab for deployment success. The **Verify Veyra** workflow runs the source and cryptography tests separately.
+
+## Pulse layout (mobile-friendly)
+
+The Messages screen contains the current temporary private conversation only (no stored inbox). Search filters **messages already visible in this browser session**. On phones, the bottom navigation opens **Chats**, **Invite**, starts **Video call** only after both peers verify, and opens **Safety** where safety numbers must be compared. Camera/microphone are not activated until a call is accepted. This is a design update; the signaling, encryption, and verification protocols are unchanged.
 
 ## STEP 3 — Chat and call from two phones
 
@@ -93,6 +97,6 @@ Code license: MIT. Prototype intended as an educational starting point.
 
 ## Deployment status and GitHub permissions
 
-The linked GitHub integration can update files in an existing repository, but cannot create a repository or enable GitHub Pages for a new one. You must create an empty **public** repository on your account and enable GitHub Actions as the Pages source. Firebase project creation, anonymous sign-in enablement, and database rule publication also require the project owner to authorize those changes in the Firebase Console. These steps cannot be performed anonymously or by simply uploading a ZIP.
+The linked GitHub integration can update files in an existing repository, but cannot create a repository or enable GitHub Pages for a new one. You must create an empty **public** repository on your account and enable GitHub Pages publishing from the `main` branch. Firebase project creation, anonymous sign-in enablement, and database rule publication also require the project owner to authorize those changes in the Firebase Console. These steps cannot be performed anonymously or by simply uploading a ZIP.
 
 Once the repository exists, its individual files can be published from this folder. Do not copy the ZIP itself into the repository as the only file.
